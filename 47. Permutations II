@@ -1,0 +1,43 @@
+class Solution {
+public:
+
+    vector<vector<int>> helper(vector<int>& nums) {
+        vector<vector<int>> ans;
+        if(nums.size()==0)
+        {
+            return ans;
+        }
+        if(nums.size()==1)
+        {
+            vector<int> current;
+            current.push_back(nums[0]);
+            ans.push_back(current);
+            return ans;
+        }
+        
+        for(int i=0;i<nums.size();i++)
+        {
+            while(i<nums.size()-1&&nums[i] == nums[i+1])
+            {
+                i++;
+            }
+            int top = nums[i];
+            nums.erase(nums.begin()+i);
+            vector<vector<int>> rec = helper(nums);
+            
+            for(int j=0;j<rec.size();j++)
+            {
+                rec[j].insert(rec[j].begin(),top);
+                ans.push_back(rec[j]);
+            }
+            nums.insert(nums.begin()+i,top);
+        }
+        return ans;
+    }
+    
+    vector<vector<int>> permuteUnique(vector<int>& nums)
+    {
+        sort(nums.begin(),nums.end());
+        return helper(nums);
+    }
+};
