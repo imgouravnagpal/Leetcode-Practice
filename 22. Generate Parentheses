@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<string> dp[9];
+    vector<string> generateParenthesis(int n) {
+        if(n == 0)
+        {
+            return {""};
+        }
+        if(dp[n].size()!=0)
+        {
+            return dp[n];
+        }
+        for(int i=0;i<n;i++)
+        {
+            vector<string> op1 = generateParenthesis(i);
+            vector<string> op2 = generateParenthesis(n-i-1);
+            
+            for(auto first : op1)
+            {
+                for(auto sec: op2)
+                {
+                    dp[n].push_back('(' + first + ')' + sec);
+                }
+            }
+        }
+        return dp[n];
+    }
+};
