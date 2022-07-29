@@ -1,0 +1,60 @@
+class Solution {
+public:
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+        unordered_map<char,int> mp;
+        vector<string> ans;
+        vector<int> freq(50,-1);
+        vector<int> freq1(50,-1);
+        freq[0] = 0;
+        mp[pattern[0]] = 0;
+        
+        for(int i=1;i<pattern.size();i++)
+        {
+            if(mp.find(pattern[i]) != mp.end())
+            {
+                freq[i] = mp[pattern[i]];
+            }
+            else{
+                freq[i] = i;
+                mp[pattern[i]] = i;
+            }
+        }
+        mp.clear();
+        for(int k=0;k<words.size();k++)
+        {
+            string current = words[k];
+            freq1[0] = 0;
+            mp[current[0]] = 0;
+        
+            for(int i=1;i<current.size();i++)
+            {
+                if(mp.find(current[i]) != mp.end())
+                {
+                   freq1[i] = mp[current[i]];
+                }
+                else{
+                    freq1[i] = i;
+                    mp[current[i]] = i;
+                }
+            }
+            
+            bool flag = true;
+            for(int i=0;i<50;i++)
+            {
+                if(freq[i] != freq1[i])
+                {
+                    flag = false;
+                }
+            }
+            if(flag)
+            {
+                ans.push_back(current);
+            }
+            mp.clear();
+            freq1.clear();
+        }
+        
+        return ans;
+        
+    }
+};
