@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
+        vector<int> freq(26,0);
+        
+        vector<string> ans;
+        for(auto current: words2)
+        {
+            vector<int> freq1(26,0);
+            for(auto i: current)
+            {
+                freq1[i-'a']++;
+            }
+            for(int i=0;i<26;i++)
+            {
+                freq[i] = max(freq[i],freq1[i]);
+            }
+        }
+        for(auto current: words1)
+        {
+            vector<int> freq1(26,0);
+            for(auto i :current)
+            {
+                freq1[i-'a']++;
+            }
+            bool flag = true;
+           
+                for(int j=0;j<26;j++)
+                {
+                    if(freq[j] > freq1[j])
+                    {
+                        flag = false;
+                        goto jump;
+                    }
+                }
+            
+            jump:
+            if(flag)
+            {
+                ans.push_back(current);
+            }
+            
+        }
+        return ans;
+    }
+};
