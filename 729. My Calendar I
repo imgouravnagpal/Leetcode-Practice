@@ -1,0 +1,23 @@
+class MyCalendar {
+public:
+    set<pair<int,int>> Calender;
+    MyCalendar() {
+    }
+    
+    bool book(int start, int end) {
+        for(auto i : Calender)
+        {
+            if(start < i.second && start >= i.first)
+            {
+                return false;
+            }
+            if(start < i.first && ((end > i.first&&end<=i.second) || (end > i.second)))
+            {
+                return false;
+            }
+            
+        }
+        Calender.insert({start,end});
+        return true;
+    }   
+};
