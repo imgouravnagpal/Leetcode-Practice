@@ -1,0 +1,54 @@
+class Solution {
+public:
+    bool *global = new bool[100001];
+    bool helper(int data,vector<vector<int>>&edges,bool* visited)
+    {
+        
+        if(visited[data])
+        {
+            return false;
+        }
+        
+        
+        visited[data] = true;
+        
+        bool ans = true;
+        for(int i=0;i<edges.size();i++)
+        {
+            if(edges[i][0] == data && !global[edges[i][1]])
+            {
+                ans = helper(edges[i][1],edges,visited);
+                if(ans == false)
+                {
+                    return false;
+                }
+            }
+        }
+        global[data] = true;
+        visited[data] = false;
+        return true;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        bool *visited = new bool[numCourses];
+        for(int i = 0;i<numCourses;i++)
+        {
+            global[i] = false;
+            visited[i] = false;
+        }
+    
+        for(int i=0;i<numCourses;i++)
+        {
+            if(!global[i])
+            {
+            
+        
+                bool ans = helper(i,prerequisites,visited);
+                if(ans == false)
+                {
+                    return false;
+                }
+            }
+        }
+       return true;
+    }
+};
