@@ -1,0 +1,50 @@
+
+class Solution {
+public:
+    vector<TreeNode*> helper(int start,int end)
+    {
+        if(start>end)
+        {
+            vector<TreeNode*> ans;
+            ans.push_back(NULL);
+            return ans;
+        }
+        
+        if(start == end)
+        {
+            vector<TreeNode*> ans;
+            TreeNode* new1 = new TreeNode(start);
+            ans.push_back(new1);
+            return ans;
+        }
+        vector<TreeNode*>ans;
+        for(int i=start;i<=end;i++)
+        {
+            
+            vector<TreeNode*> left = helper(start,i-1);
+            vector<TreeNode*> right = helper(i+1,end);
+            
+            for(int k=0;k<left.size();k++)
+            {
+                
+                TreeNode*left1 = left[k];
+                
+                //ans.push_back(temp);
+            
+            for(int j=0;j<right.size();j++)
+            {
+                //TreeNode* temp = root;
+                TreeNode *right1 = right[j];
+                TreeNode* root = new TreeNode(i);
+                root ->right = right1;
+                root->left = left1;
+                ans.push_back(root);
+            }
+            }
+        }
+        return ans;
+    }
+    vector<TreeNode*> generateTrees(int n) {
+        return helper(1,n);
+    }
+};
