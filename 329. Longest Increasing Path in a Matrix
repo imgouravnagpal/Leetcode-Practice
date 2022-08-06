@@ -1,0 +1,52 @@
+class Solution {
+public:
+ 
+    int n,m;
+    vector<vector<int>> dp;
+    int moves[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+    bool valid(int i,int j)
+    {
+        return (i<n && i>=0 && j<m && j>=0);
+    }
+    int dfs(vector<vector<int>>& matrix , int i, int j)
+    {
+        int ans = 0;
+        if(dp[i][j] != -1)
+        {
+            return dp[i][j];
+        }
+        
+        for(int k=0;k<4;k++)
+        {
+            int newi = i+moves[k][0];
+            int newj = j+ moves[k][1];
+            
+            if(valid(newi,newj) && matrix[i][j] < matrix[newi][newj])
+            {
+                ans  = max(ans,dfs(matrix,newi,newj));
+            }
+        }
+        dp[i][j] = ans+1;
+        return ans+1;
+        
+    }
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        n = matrix.size();
+        m = matrix[0].size();
+        dp.resize(n,vector<int>(m,-1));
+        int ans = 1;
+  
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(valid(i,j))
+                {
+                    int current = dfs(matrix,i,j);
+                    ans = max(current,ans);
+                }
+            }
+        }
+        return ans;
+    }
+};
