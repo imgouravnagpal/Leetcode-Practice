@@ -1,0 +1,68 @@
+class Solution {
+public:
+    bool *global = new bool[2001];
+    vector<int> helper(int data,vector<vector<int>>& edges,bool *visited)
+    {
+        if(visited[data])
+        {
+            vector<int> ans;
+            return ans;
+        }
+        
+        visited[data] = true;
+        vector<vector<int>> answers;
+        
+        for(int i=0;i<edges.size();i++)
+        {
+            if(edges[i][0] == data && !global[edges[i][1]])
+            {
+                vector<int> current = helper(edges[i][1],edges,visited);
+                if(current.size()==0)
+                {
+                    return current;
+                }
+                else{
+                    answers.push_back(current);
+                }
+            }
+        }
+        visited[data] = false;
+        global[data] = true;
+        vector<int> result;
+        for(int i=0;i<answers.size();i++)
+        {
+            for(int j=0;j<answers[i].size();j++)
+            {
+                result.push_back(answers[i][j]);
+            }
+        }
+        result.push_back(data);
+        return result;
+    }
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        bool *visited = new bool[numCourses];
+        for(int i=0;i<numCourses;i++)
+        {
+            visited[i] = false;
+            global[i] = false;
+        }
+        vector<int> result;
+        for(int i=0;i<numCourses;i++)
+        {
+            if(!global[i])
+            {
+                vector<int> current = helper(i,prerequisites,visited);
+                if(current.size()==0)
+                {
+                    vector<int> empty;
+                    return empty;
+                }
+                for(int i=0;i<current.size();i++)
+                {
+                    result.push_back(current[i]);
+                }
+            }
+        }
+        return result;
+    }
+};
