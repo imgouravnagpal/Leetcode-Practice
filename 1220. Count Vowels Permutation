@@ -1,0 +1,39 @@
+class Solution {
+public:
+    #define mod 1000000007
+    int countVowelPermutation(int n) {
+        if(n==0)
+        {
+            return 0;
+        }
+        unordered_map<char,vector<char>> freq;
+        freq['a'] = {'e'};
+        freq['e'] = {'a','i'};
+        freq['i'] = {'a','e','o','u'};
+        freq['o'] = {'i','u'};
+        freq['u'] = {'a'};
+        
+        vector<unordered_map<char,long long>> dp(n+1);
+        dp[0] = {{'a',1},{'e',1},{'i',1},{'o',1},{'u',1}};
+        
+        for(int i=1;i<n;i++)
+        {
+            for(auto i1 : dp[i-1])
+            {
+                for(auto j: freq[i1.first])
+                {
+                    dp[i][j] += i1.second;
+                    dp[i][j] = dp[i][j]%mod;
+                }
+            }
+        }
+        
+        long long ans = 0;
+        for(auto i : dp[n-1])
+        {
+            ans = (ans + i.second)%mod;
+        }
+        return (ans%mod);
+        
+    }
+};
