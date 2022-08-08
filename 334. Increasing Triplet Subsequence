@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int large = INT_MAX;
+        int small = INT_MAX;
+        for(auto i : nums)
+        {
+            if(i <= large)
+            {
+                large = i;
+            }
+            else if(i <=small)
+            {
+                small = i;
+            }
+            else{
+                return true;
+            }
+        }
+        return false;
+    }
+};
