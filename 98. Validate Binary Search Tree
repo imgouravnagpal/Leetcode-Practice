@@ -1,0 +1,46 @@
+class Solution {
+public:
+    #include<climits>
+    #define data val
+int maximam(TreeNode *root)
+{	
+    if(root==NULL)
+    {
+        return INT_MIN;
+    }
+    int ans=root->val;
+    int ans1=maximam(root->left);
+    int ans2=maximam(root->right);
+    return max(ans1,max(ans,ans2));
+}
+int minimum(TreeNode *root)
+{
+    if(root==NULL)
+    {
+        return INT_MAX;
+    }
+    int ans = root->data;
+    return min(ans,min(minimum(root->left),minimum(root->right)));
+}
+bool isValidBST(TreeNode *root) {
+	if(root==NULL)
+    {
+        return true;
+    }
+    if(root->left!=NULL)
+    {
+        if(maximam(root->left)>=root->data)
+        {
+            return false;
+        }
+    }
+    if(root->right!=NULL)
+    {
+        if(minimum(root->right)<=root->data)
+        {
+            return false;
+        }
+    }
+    return isValidBST(root->left)*isValidBST(root->right);
+}
+};
