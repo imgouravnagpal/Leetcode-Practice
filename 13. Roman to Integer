@@ -1,0 +1,23 @@
+class Solution {
+public:
+    map<char,int>vals={
+        {'I'    ,         1 } ,
+        {'V'         ,    5},
+        {'X'          ,   10},
+        {'L'        ,     50},
+        {'C'       ,      100},
+        {'D'        ,     500},
+        {'M'        ,     1000}
+    };
+    int romanToInt(string s) {
+        int value=0;
+        int n=s.size();
+        for(int i=n-1;i>=0;i--){
+            if(i+1<n&&vals[s[i+1]]>vals[s[i]])
+                value-=vals[s[i]];
+            else 
+                value+=vals[s[i]];
+        }
+        return value;
+    }
+};
