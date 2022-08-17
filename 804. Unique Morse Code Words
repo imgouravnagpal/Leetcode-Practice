@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int uniqueMorseRepresentations(vector<string>& words) {
+        vector<string> map = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        set<string> ans;
+        
+        for(auto i : words)
+        {
+            string current = "";
+            for(auto j : i)
+            {
+                current+= map[j-'a'];
+            }
+            ans.insert(current);
+        }
+        return ans.size();
+    }
+};
