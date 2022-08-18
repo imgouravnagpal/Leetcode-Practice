@@ -1,0 +1,25 @@
+int minSetSize(vector<int>& arr) {
+        vector<vector<int>> count(arr.size()+1);
+        sort(arr.begin(),arr.end());
+        int freq=1;
+        for(int i=1;i<arr.size();i++){
+            if(arr[i]==arr[i-1]) freq++;
+            else{
+                count[freq].push_back(arr[i-1]);
+                freq=1;
+            }
+        }
+        count[freq].push_back(arr[arr.size()-1]);
+        
+        int ans=0;
+        int noe=arr.size();
+        for(int i=count.size()-1;i>=0;i--){
+            for(int j=0;j<count[i].size();j++){
+                ans++;
+                noe-=i;
+                if(noe<=arr.size()/2) return ans;
+            }
+        }
+        
+        return ans;
+    }
