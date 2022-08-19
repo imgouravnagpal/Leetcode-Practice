@@ -1,0 +1,31 @@
+class Solution {
+public:
+bool isPossible(vector<int>& nums) {
+
+    unordered_map<int,int> m;
+    
+    for(int i=0 ;i<nums.size() ;i++)
+        m[nums[i]]++;
+    
+    for(int i=0 ;i<nums.size() ;i++)
+    {
+        int val = nums[i];
+        
+        if(m[val]==0)
+            continue;
+        
+        int f = m[val] , count = 0;
+        
+        while(m[val] && f<=m[val])
+        {
+            f = max(f,m[val]);
+            m[val]--;
+            val++;
+            count++;
+        }
+        
+        if(count<3)   return 0;
+    }
+   return 1;
+}
+};
