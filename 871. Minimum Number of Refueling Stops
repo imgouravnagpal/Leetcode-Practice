@@ -1,0 +1,30 @@
+class Solution {
+public:
+
+#define ll long long
+int minRefuelStops(int target, int start, vector<vector<int>>& stations) {
+    priority_queue<ll>q;
+    ll i,j,count=0;
+    for(i=0;i<stations.size();i++){
+        if(start>=stations[i][0]){
+            q.push(stations[i][1]);
+        }
+        else{
+            while(!q.empty()&&start<stations[i][0]){
+                count++;
+                start+=q.top();
+                q.pop();
+            }
+            q.push(stations[i][1]);
+            if(start<stations[i][0]) return -1;
+        }
+        if(start>=target) return count;
+    }
+    while(start<target&&!q.empty()){
+        start+=q.top();
+        q.pop();count++;
+    }
+    if(start<target) return -1;
+    return count;
+}
+};
