@@ -1,0 +1,61 @@
+class Solution {
+public:
+    vector<int> movesToStamp(string stamp, string target) {
+        if (size(target) == size(stamp))
+        {
+            if (target == stamp) return { 0 };
+            return {};
+        }
+
+        vector<int> res;
+
+        // Get first occurences of stamp matching
+        int pos = target.find(stamp);
+        if (pos == string::npos) return {};
+        fill(begin(target) + pos, begin(target) + pos + size(stamp), '?');
+        res.push_back(pos);
+        do {
+            int pos = getStampIndex(target, stamp);
+            if (pos == -1)
+                return {};
+
+            res.push_back(pos);
+            fill(begin(target) + pos, begin(target) + pos + size(stamp), '?');
+
+        } while (target.find_first_not_of('?') != string::npos);
+
+        reverse(begin(res), end(res));
+
+        return res;
+    }
+    
+private:
+    bool isAllQuestionMark(const string& s)
+    {
+        size_t pos = s.find_first_not_of('?');
+        if (pos != string::npos) 
+            return false;
+
+        return true;
+    }
+
+    bool isWildOrSameChar(const string& target, int start, const string& stamp) 
+    {
+        for (int i = 0; i < size(stamp); i++)
+            if (target[start + i] != '?' and target[start + i] != stamp[i])
+                return false;
+
+        return true;
+    }
+
+    int getStampIndex(const string& target, const string& stamp) 
+    {
+        for (int indx = 0; indx <= size(target) - size(stamp); indx++) 
+        {
+            if (!isAllQuestionMark(target.substr(indx, size(stamp))) and
+                isWildOrSameChar(target, indx, stamp))
+                return indx;
+        }
+        return -1;
+    }
+};
