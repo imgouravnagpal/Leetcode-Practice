@@ -1,0 +1,52 @@
+int kadane(vector<int>& dp)
+{
+    int negcheck = INT_MIN;
+    
+    for(auto i: dp)
+    {
+        negcheck = max(negcheck,i);
+    }
+  
+    if(negcheck<0)
+    {
+        return negcheck;
+    }
+    int ans = 0;
+    int maxtillnow = 0;
+    
+    for(int i=0;i<dp.size();i++)
+    {
+        maxtillnow += dp[i];
+        if(maxtillnow < 0)
+        {
+            maxtillnow = 0;
+        }
+        
+        ans = max(ans,maxtillnow);
+    }
+	return ans;
+}
+int maxSumRectangle(vector<vector<int>>& arr, int n, int m)
+{
+    // write your code here
+    int ans = INT_MIN;
+    
+    for(int i=0;i<n;i++)
+    {
+        vector<int> dp(m,0);
+        for(int j=i;j<n;j++)
+        {
+            for(int k=0;k<m;k++)
+            {
+                dp[k] += arr[j][k];
+                
+            }        
+            int currentans = kadane(dp);
+            ans = max(ans,currentans);
+        }
+    }
+    
+    
+    return ans;
+    
+}
