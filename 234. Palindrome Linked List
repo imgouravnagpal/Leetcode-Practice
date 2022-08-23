@@ -1,0 +1,51 @@
+class Solution {
+public:
+    pair<ListNode*,ListNode*> reverse(ListNode* head)
+    {
+        if(head == NULL)
+        {
+            return {NULL,NULL};
+        }
+        if(head->next == NULL)
+        {
+            return {head,head};
+        }
+        
+        pair<ListNode*,ListNode*> smallans = reverse(head->next);
+        
+        if(smallans.second!=NULL)
+        {
+            smallans.second->next = head;
+            head->next = NULL;
+            smallans.second = head;
+            return smallans;
+        }
+        return {head,head};
+        
+    }
+    bool isPalindrome(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while(fast!= NULL && fast->next!= NULL)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        pair<ListNode*,ListNode*> rev = reverse(slow);        
+        ListNode* first = head;
+        ListNode* second = rev.first;
+        
+        while(first!=NULL && second!=NULL)
+        {
+            if(first->val!=second->val)
+            {
+                return false;
+            }
+            first = first->next;
+            second = second->next;
+        }
+        return true;
+        
+    }
+};
