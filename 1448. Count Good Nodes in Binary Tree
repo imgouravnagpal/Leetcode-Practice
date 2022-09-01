@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int count = 0;
+    void preorder(TreeNode* root,int max)
+    {
+        if(root == NULL)
+        {
+            return;
+        }
+        if(root->val >= max)
+        {
+            max = root->val;
+            count++;
+        }
+        preorder(root->left,max);
+        preorder(root->right,max);
+    }
+    int goodNodes(TreeNode* root) {
+        preorder(root,INT_MIN);
+            return count;
+    }
+};
