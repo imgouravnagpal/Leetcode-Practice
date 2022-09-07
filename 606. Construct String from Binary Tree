@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string tree2str(TreeNode* root) {
+        if(root == NULL)
+        {
+            return "()";
+        }
+        
+        string leftans="";
+        string rightans;
+        
+        if(root->left != NULL)
+        {
+            leftans = tree2str(root->left);
+        }
+        if(root->right != NULL)
+        {
+            rightans = tree2str(root->right);
+        }
+        
+        string ans = to_string(root->val);
+        
+        
+        if(leftans.size()!=0 || rightans.size()!=0)
+        {
+            ans += '(' + leftans + ')';
+        }
+        if(rightans.size()!=0)
+        {
+
+            ans += '(' + rightans + ')';
+        }
+        return ans;
+    }
+};
