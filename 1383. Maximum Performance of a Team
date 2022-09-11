@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
+        vector<pair<int,int>> se(n);
+        
+        for(int i=0;i<n;i++)
+        {
+            se[i] = {efficiency[i],speed[i]};
+        }
+        sort(rbegin(se),rend(se));
+        
+        priority_queue<int,vector<int>,greater<int>> pq;
+        long sum =0;
+        long ans = 0;
+        for(auto &[e,s] : se)
+        {
+            pq.emplace(s);
+            sum += s;
+            
+            
+            if(pq.size() > k)
+            {
+                sum -= pq.top();
+                pq.pop();
+            }
+            ans = max(ans,(sum*e));
+         
+        }
+        return ans%(int)(1e9+7);
+    }
+};
