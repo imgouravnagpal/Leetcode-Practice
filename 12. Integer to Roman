@@ -1,0 +1,60 @@
+class Solution {
+public:
+    #include<unordered_map>
+    unordered_map<int,string> data;
+    vector<int> trav;
+    
+    string helper(int num)
+    {
+        if(num <= 0)
+        {
+            string ans = "";
+            return ans;
+        }
+        string ans = "";
+        
+        while(num > 0)
+        {
+            int index = upper_bound(trav.begin(),trav.end(),num) - trav.begin() - 1;
+            
+            num -= trav[index];
+            ans += data[trav[index]];
+        }
+        
+        return ans;
+    }
+    string intToRoman(int num) {
+        data[1] = "I";
+        data[5] = "V";
+        data[10] = "X";
+        data[50] = "L";
+        data[100] = "C";
+        data[500] = "D";
+        data[900] = "CM";
+        data[400] = "CD";
+        data[90] = "XC";
+        data[40] = "XL";
+        data[9] = "IX";
+        data[4] = "IV";
+        data[1000] = "M";
+        
+        trav.push_back(1);
+        trav.push_back(4);
+        trav.push_back(5);
+        trav.push_back(9);
+        trav.push_back(10);
+        trav.push_back(40);
+        trav.push_back(50);
+        trav.push_back(90);
+        trav.push_back(100);
+        trav.push_back(400);
+        trav.push_back(500);
+        trav.push_back(900);
+        trav.push_back(1000);
+        
+        return helper(num);
+        
+        
+        
+    }
+};
