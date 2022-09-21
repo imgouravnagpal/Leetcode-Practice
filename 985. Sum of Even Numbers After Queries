@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
+        int ans = 0;
+        vector<int> ret;
+        for(auto i : nums)
+        {
+            if(i%2==0)
+            {
+                ans += i;
+            }
+        }
+        for(auto i : queries)
+        {
+            int x = nums[i[1]];
+            if(x%2==0)
+            {
+                ans -= x;
+            }
+            nums[i[1]] += i[0];
+            if(nums[i[1]] % 2 ==0)
+            {
+                ans+= nums[i[1]];
+            }
+            ret.push_back(ans);
+        }
+        
+        
+       
+        return ret;
+    }
+};
