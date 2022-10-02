@@ -1,0 +1,40 @@
+class Solution {
+public:
+    #define mod 1000000007
+    vector<vector<long long>> memo;
+    int count = 0;
+    int helper(int n, int k, int target) {
+        
+       if(n==0)
+       {
+           if(target == 0)
+           {
+               return 1;
+           }
+           else{
+               return 0;
+           }
+       }
+        if(memo[n][target] != -1)
+        {
+            return memo[n][target];
+        }
+        long long answer = 0;
+        for(int i=1;i<=k;i++)
+        {
+           if(i > target)
+           {
+               break;
+           }
+            answer = (answer % mod + helper(n-1,k,target-i)%mod)%mod;
+            answer%=mod;
+        }
+        
+        return (int)(memo[n][target] = answer%mod);
+    }
+    int numRollsToTarget(int n, int k, int target)
+    {
+        memo.resize(n+1,vector<long long>(target+1,-1));
+        return helper(n,k,target);
+    }
+};
