@@ -1,0 +1,31 @@
+class Solution {
+public:
+    TreeNode* addOneRow(TreeNode* root, int val, int depth,bool flag = 0) {
+        if(root==NULL)
+        {
+            if(depth == 1)
+            {
+                return new TreeNode(val);
+            }
+            return NULL;
+        }
+        if(depth == 1)
+        {
+            TreeNode* newnode = new TreeNode(val);
+            if(flag == 0)
+            {
+                newnode->left = root;
+            
+            }
+            else{
+                newnode->right = root;
+            }
+            return newnode;
+        }
+        else{
+            root->left = addOneRow(root->left,val,depth-1,0);
+            root->right = addOneRow(root->right,val,depth-1,1);
+        }
+        return root;
+    }
+};
