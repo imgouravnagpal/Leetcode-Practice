@@ -1,30 +1,30 @@
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int maxSum = 0;
-        int maxTillNow = 0;
-
-        int maxElement = INT_MIN;
+        int maxTilNow = 0;
+        int ans = INT_MIN;
         for(auto i : nums)
         {
-            maxElement = max(maxElement,i);
+            ans = max(ans,i);
         }
-        if(maxElement < 0)
+        if(ans <=0)
         {
-            return maxElement;
+            return ans;
         }
+        ans = 0;
+
 
         for(auto i : nums)
         {
-            maxTillNow += i;
-            if(maxTillNow < 0)
+            maxTilNow += i;
+            if(maxTilNow < 0)
             {
-                maxTillNow = 0;
+                maxTilNow = 0;
             }
 
-            maxSum = max(maxSum , maxTillNow);
+            ans = max(ans , maxTilNow);
         }
-        return maxSum;
-        
+        return ans;
     }
+    
 };
