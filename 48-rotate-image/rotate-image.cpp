@@ -1,26 +1,40 @@
 class Solution {
 public:
-    int n;
-    void Reverse_Each_Row(vector<vector<int>>& matrix)
+    void transpose(vector<vector<int>>& matrix)
     {
+        int i = 0,j=0,n=matrix.size();
+
         for(int i=0;i<n;i++)
         {
-            reverse(matrix[i].begin(),matrix[i].end());
-        }
-    }
-    void Transpose(vector<vector<int>> & matrix)
-    {
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<i;j++)
+            for(int j=0;j<=i;j++)
             {
-                swap(matrix[i][j],matrix[j][i]);
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
             }
+        }
+        return;
+    }
+    void reverseArray(vector<int>& arr)
+    {
+        int i = 0;
+        int j = arr.size()-1;
+        while(i<j)
+        {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
         }
     }
     void rotate(vector<vector<int>>& matrix) {
-        n = matrix.size();
-        Transpose(matrix);
-        Reverse_Each_Row(matrix);
+        transpose(matrix);
+        int n=matrix.size();
+        for(int i=0;i<n;i++)
+        {
+            reverseArray(matrix[i]);
+        }
+        return;
     }
 };
