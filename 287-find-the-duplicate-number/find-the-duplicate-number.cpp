@@ -1,21 +1,20 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        unordered_map<int,int> freq;
-        
+        unordered_map<int,int> mp;
+
         for(auto i :nums)
         {
-            freq[i] ++;
+            mp[i]++;
         }
-        
-        for(auto i :nums)
+
+        for(auto i :mp)
         {
-            if(freq[i] > 1)
+            if(i.second > 1)
             {
-                return i;
+                return i.first;
             }
         }
-        return 0;
-
-}
+        return -1;
+    }
 };
